@@ -36,7 +36,7 @@ ASTNode* makeIntegerNode(NodeType nodeType, int value) {
 }
 
 ASTNode* makeWhileNode(ASTNode* condition, ASTNode* doList) {
-	WhileNode* whileNode = malloc(sizeof(ASTNode));
+	WhileNode* whileNode = malloc(sizeof(WhileNode));
 
 	if(!whileNode) {
 		#ifdef PROD
@@ -50,6 +50,24 @@ ASTNode* makeWhileNode(ASTNode* condition, ASTNode* doList) {
 	whileNode->doList = doList;
 
 	return (ASTNode*) whileNode;
+}
+
+ASTNode* makeIfElseNode(ASTNode* condition, ASTNode* ifList, ASTNode* elseList) {
+	IfElseNode* ifElseNode = malloc(sizeof(IfElseNode));
+
+	if(!ifElseNode) {
+		#ifdef PROD
+		yyerror("Malloc of WhileNode failed\n");
+		#else
+		printf("Malloc of WhileNode failed\n");
+		#endif
+	}
+	ifElseNode->nodeType = ifElse;
+	ifElseNode->condition = condition;
+	ifElseNode->ifList = ifList;
+	ifElseNode->elseList = elseList;
+	
+	return (ASTNode*) ifElseNode;
 }
 
 int evaluateASTNode(ASTNode* astNode) {
@@ -87,6 +105,13 @@ int evaluateASTNode(ASTNode* astNode) {
 			if(astNode->leftChild) evaluateASTNode(astNode->leftChild);
 			if(astNode->rightChild) evaluateASTNode(astNode->rightChild);	
 			return 0;	
+		case ifElse:
+			if(evaluateASTNode(((IfElseNode*) astNode)->condition)) {
+				if(((IfElseNode*) astNode)->ifList) evaluateASTNode(((IfElseNode*) astNode)->ifList);
+			} else {
+				if(((IfElseNode*) astNode)->elseList) evaluateASTNode(((IfElseNode*) astNode)->elseList);
+			}
+			return 0;
 		default:	
 			printf("Reached default case in evaluateASTNode\n");	
 	}

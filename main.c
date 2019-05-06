@@ -137,6 +137,16 @@ int main(int argc, char** argv) {
 	freeASTNode(whileNode);
 }
 #endif
+
+#ifdef IF_ELSE_1
+int main(int argc, char** argv) {
+	printf("Test: IF_ELSE_1\n");
+	ASTNode* oneNode = makeIntegerNode(integer, 4);
+	ASTNode* twoNode = makeIntegerNode(integer, 1);
+	ASTNode* gtNode = makeASTNode(gt, oneNode, twoNode);
+	evaluateASTNode(ifElseNode);
+}
+#endif
 #ifdef LIST
 int main(int argc, char** argv) {
 	printf("Test: LIST\n");

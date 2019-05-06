@@ -1,0 +1,11 @@
+v1=7;
+v2=3;
+while(v1!=v2) do
+	if(v1>v2) then 
+		v1 = v1 - v2;
+	fi else
+		v2 = v2 - v1;
+	;
+od;
+
+write v1;
