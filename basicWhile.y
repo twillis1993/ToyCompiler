@@ -22,23 +22,23 @@ int symbolArray[10];
 
 %%
 
-BasicWhileProgram:	StatementList ';'
+BasicWhileProgram:	StatementList 		{ $$ = makeASTNode(list, $1, NULL); evaluateASTNode($$); }
 	;
 
-StatementList:		
-	|		Statement ';' StatementList 
+StatementList:
+	|		Statement ';' StatementList	{ $$ = makeASTNode(list, $1, $3); }
 	;
 
 Statement:		AssignmentStatement
 	|		WhileStatement
 	|		WriteStatement	
+	| 		Expression			{ printf("%d\n", evaluateASTNode($1)); }
 	;
-
 
 AssignmentStatement:	VARIABLE '=' Expression	{ $$ = makeASTNode(assign, makeIntegerNode(variable, $1), $3); }
 	;
 
-WhileStatement:		WHILE '(' BooleanExpression ')' DO BasicWhileProgram OD
+WhileStatement:		WHILE '(' BooleanExpression ')' DO StatementList OD { $$ = makeWhileNode($3, $6); }
 
 WriteStatement:		WRITE Expression		{ $$ = makeASTNode(write, $2, NULL); }
 	;

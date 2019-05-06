@@ -33,5 +33,4 @@ v[0-9] 	{ yylval.intValue=(yytext[1] - '0'); return VARIABLE; }
 "write" { return WRITE; }
 
 [ \t\n]	;
-
 %%
