@@ -1,7 +1,7 @@
 CC=gcc
-# Default DEF
 DEF=EVAL_INT
-DEF_FLAGS=-D $(DEF)
+BISON_DEF=PROD
+DEF_FLAGS=-D$(DEF) -D$(BISON_DEF)
 
 ast.o:	ast.c
 	$(CC) -c -o $@ $^ -I.
@@ -15,5 +15,5 @@ main:	main.o ast.o
 basicWhile:	basicWhile.l basicWhile.y ast.o
 		bison -d -v basicWhile.y
 		flex basicWhile.l
-		$(CC) -o $@ basicWhile.tab.c lex.yy.c -I. -lfl
+		$(CC) -o $@ basicWhile.tab.c lex.yy.c -I. -lfl $(DEF_FLAGS)
 

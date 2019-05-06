@@ -1,7 +1,7 @@
 // Adapted from 'Flex and Bison' by Levine.
 #ifndef TEST
 extern int yylineno;
-void yyerror(char *s);
+int yyerror(char *s);
 #endif
 
 enum NodeType { ast, integer, plus, minus, multiply, divide };
