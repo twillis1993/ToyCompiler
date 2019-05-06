@@ -57,6 +57,10 @@ int evaluateASTNode(ASTNode* astNode);
 
 void freeASTNode(ASTNode* astNode);
 
-int generateCode(ASTNode* astNode);
+void generateProgram(ASTNode* headNode);
+
+void generateCode(ASTNode* astNode);
+
+
 
 #endif
