@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "ast.h"
 
+int symbolArray[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 #ifdef EVAL_INT
 int main(int argc, char** argv) {
 	printf("Starting...\n");
@@ -70,11 +72,23 @@ int main(int argc, char** argv) {
 	freeASTNode(nequalNode);
 }
 #endif
+#ifdef ASSIGN
+int main(int argc, char** argv) {
+	printf("Test: ASSIGN\n");
+
+	ASTNode* variableNode = makeIntegerNode(variable, 1);
+	ASTNode* fiveNode = makeIntegerNode(integer, 5);
+	ASTNode* assignNode = makeASTNode(assign, variableNode, fiveNode);
+	int v1Before = symbolArray[1];
+	evaluateASTNode(assignNode);	
+	int v1After = symbolArray[1];
+	printf("Before: %d, Expected: 5, Actual: %d\n", v1Before, v1After);
+	freeASTNode(assignNode);
+}
+#endif
 #ifdef WHILE
 int main(int argc, char** argv) {
 	printf("Test: WHILE\n");
-
-	int symbolArray[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 	ASTNode* conditionNode = NULL;
 	ASTNode* doListNode = NULL;

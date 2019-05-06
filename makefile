@@ -18,3 +18,5 @@ basicWhile:	basicWhile.l basicWhile.y ast.o
 		flex basicWhile.l
 		$(CC) -o $@ ast.o basicWhile.tab.c lex.yy.c -I. -lfl $(DEF_FLAGS)
 
+clean:		
+		rm -f *.o basicWhile main

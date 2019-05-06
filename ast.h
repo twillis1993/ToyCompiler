@@ -7,7 +7,6 @@ extern int yylineno;
 int yyerror(char *s);
 #endif
 
-// TODO may cause a problem
 extern int symbolArray[10];
 
 enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write };

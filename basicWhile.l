@@ -2,7 +2,7 @@
 #include "basicWhile.tab.h"
 #include <stdlib.h>
 
-extern int symbolArray[];
+extern int symbolArray[10];
 
 %}
 
