@@ -83,9 +83,10 @@ int evaluateASTNode(ASTNode* astNode) {
 			return 0;
 		case list: 
 			if(astNode->leftChild) evaluateASTNode(astNode->leftChild);
-			if(astNode->rightChild) evaluateASTNode(astNode->rightChild);
+			if(astNode->rightChild) evaluateASTNode(astNode->rightChild);	
 			return 0;	
-		default:	printf("Reached default case in evaluateASTNode\n");	
+		default:	
+			printf("Reached default case in evaluateASTNode\n");	
 	}
 }
 

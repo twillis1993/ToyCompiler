@@ -25,7 +25,7 @@ int symbolArray[10];
 BasicWhileProgram:	StatementList 		{ $$ = makeASTNode(list, $1, NULL); evaluateASTNode($$); }
 	;
 
-StatementList:
+StatementList:						{ $$ = NULL; }
 	|		Statement ';' StatementList	{ $$ = makeASTNode(list, $1, $3); }
 	;
 

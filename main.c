@@ -102,7 +102,8 @@ int main(int argc, char** argv) {
 	printf("Test: WHILE\n");
 	ASTNode* conditionNode = NULL;
 	ASTNode* doListNode = NULL;
-	ASTNode* whileNode = makeASTNode(doWhile, conditionNode, doListNode);
+	ASTNode* whileNode = makeWhileNode(doWhile, conditionNode, doListNode);
+	evaluateASTNode(whileNode);
 	freeASTNode(whileNode);
 }
 #endif
@@ -118,5 +119,21 @@ int main(int argc, char** argv) {
 	ASTNode* listNode = makeASTNode(list, assignNode, writeNode);	
 	evaluateASTNode(listNode);	
 	freeASTNode(listNode);
+}
+#endif
+#ifdef PROGRAM
+int main(int argc, char** argv) {
+	printf("Test: PROGRAM\n");
+	// left child
+	ASTNode* variableNode = makeIntegerNode(variable, 1);
+	ASTNode* fiveNode = makeIntegerNode(integer, 5);
+	ASTNode* assignNode = makeASTNode(assign, variableNode, fiveNode);
+	// right child		
+	ASTNode* writeNode = makeASTNode(write, variableNode, NULL);
+	ASTNode* listNode = makeASTNode(list, assignNode, writeNode);	
+	ASTNode* programNode = makeASTNode(list, listNode, NULL);
+	printf("Expected output: 5\nActual output: ");
+	evaluateASTNode(programNode);	
+	freeASTNode(programNode);
 }
 #endif
