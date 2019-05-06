@@ -189,7 +189,7 @@ void generateCode(ASTNode* astNode, FILE* outputFile) {
 			fprintf(outputFile, "symbolArray[%d]", ((IntegerNode*) astNode)->value);
 			break;
 		case write:
-			fprintf(outputFile, "fprintf(outputFile, \"%%d\\n\", ");
+			fprintf(outputFile, "printf(\"%%d\\n\", ");
 			generateCode(astNode->leftChild, outputFile);
 			fprintf(outputFile, ");");
 			break;
