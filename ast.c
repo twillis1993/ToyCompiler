@@ -56,5 +56,3 @@ void freeASTNode(ASTNode* astNode) {
 				free(astNode);
 	}
 }
-
-

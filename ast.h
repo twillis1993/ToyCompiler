@@ -1,5 +1,8 @@
+#ifndef AST_H
+#define	AST_H
+
 // Adapted from 'Flex and Bison' by Levine.
-#ifndef TEST
+#ifdef PROD
 extern int yylineno;
 int yyerror(char *s);
 #endif
@@ -31,3 +34,4 @@ int evaluateASTNode(ASTNode* astNode);
 
 void freeASTNode(ASTNode* astNode);
 
+#endif

@@ -18,3 +18,7 @@ while a != b
 	else
 		b := b - a;
 return a;
+
+# AST
+
+I think that the Expression: Factor production may pose a problem as it will give us an IntegerNode Expression

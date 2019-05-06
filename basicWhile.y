@@ -8,13 +8,14 @@ int symbolArray[10];
 %}
 
 %union { 
-	char* stringValue;
+	struct ASTNode* astNode;
 	int intValue;
 }
 
-%token VARIABLE INTEGER BOOL WHILE NEQ DO OD ASS_PLUS ASS_SUB
+%token VARIABLE INTEGER BOOL WHILE NEQ DO OD ASS_PLUS ASS_SUB WRITE
 
-%type <intValue> Expression Factor VARIABLE INTEGER BOOL
+%type <astNode> Expression Factor
+%type <intValue> INTEGER VARIABLE
 
 %left '+' '-'
 %left '*' '/'
@@ -28,29 +29,26 @@ StatementList:
 	|		Statement ';' StatementList
 	;
 
-Statement:		WhileStatement
-	|		AssignmentStatement
+Statement:		AssignmentStatement
 	;
-
-WhileStatement:		WHILE VARIABLE NEQ INTEGER DO StatementList ';' OD
 
 AssignmentStatement:	VARIABLE '=' VARIABLE	{ symbolArray[$1] = symbolArray[$3]; }
 	| 		VARIABLE '=' INTEGER	{ symbolArray[$1] = $3; }
-	| 		VARIABLE '=' Expression { symbolArray[$1] = $3; }
-	| 		VARIABLE ASS_PLUS Expression { symbolArray[$1] = symbolArray[$1] + $3; }	
-	| 		VARIABLE ASS_SUB Expression { symbolArray[$1] = symbolArray[$1] - $3; }
-	|		Expression		{ printf("%d\n", $1); }
+	| 		VARIABLE '=' Expression { symbolArray[$1] = evaluateASTNode($3); }
+	| 		VARIABLE ASS_PLUS Expression { symbolArray[$1] = symbolArray[$1] + evaluateASTNode($3); }	
+	| 		VARIABLE ASS_SUB Expression { symbolArray[$1] = symbolArray[$1] - evaluateASTNode($3); }
+	|		Expression
 	;
 
-Expression:		Expression '*' Expression	{ $$ = $1 * $3; }
-	|		Expression '/' Expression 	{ $$ = $1 / $3; }
-	|		Expression '+' Expression 	{ $$ = $1 + $3; }
-	|		Expression '-' Expression 	{ $$ = $1 - $3; }
-	| 		Factor	
+Expression:		Expression '*' Expression	{ $$ = makeASTNode(multiply, $1, $3); }
+	|		Expression '/' Expression 	{ $$ = makeASTNode(divide, $1, $3); }
+	|		Expression '+' Expression 	{ $$ = makeASTNode(plus, $1, $3); }
+	|		Expression '-' Expression 	{ $$ = makeASTNode(minus, $1, $3); }
+	| 		Factor				
 	;	
 
-Factor:			VARIABLE		{ $$ = symbolArray[$1]; }
-	|		INTEGER	
+Factor:			VARIABLE		{ $$ = makeIntegerNode(symbolArray[$1]); }
+	|		INTEGER			{ $$ = makeIntegerNode($1);}
 	;
 
 %%
