@@ -34,7 +34,7 @@ Statement:		AssignmentStatement
 	|		WhileStatement
 	|		WriteStatement	
 	| 		IfStatement
-	| 		Expression			{ printf("%d\n", evaluateASTNode($1)); }
+	| 		Expression			{ $$ = $1; printf("%d\n", evaluateASTNode($1)); }
 	;
 
 AssignmentStatement:	VARIABLE '=' Expression	{ $$ = makeASTNode(assign, makeIntegerNode(variable, $1), $3); }
