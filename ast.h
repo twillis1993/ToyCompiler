@@ -9,7 +9,7 @@ int yyerror(char *s);
 
 extern int symbolArray[10];
 
-enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write, list, gt, ifElse };
+enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write, list, gt, ifElse, program };
 
 typedef enum NodeType NodeType;
 
@@ -56,5 +56,7 @@ ASTNode* makeIfElseNode(ASTNode* condition, ASTNode* ifList, ASTNode* elseList);
 int evaluateASTNode(ASTNode* astNode);
 
 void freeASTNode(ASTNode* astNode);
+
+int generateCode(ASTNode* astNode);
 
 #endif

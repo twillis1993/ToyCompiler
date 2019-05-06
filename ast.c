@@ -101,6 +101,7 @@ int evaluateASTNode(ASTNode* astNode) {
 				}	
 			}
 			return 0;
+		case program:
 		case list: 
 			if(astNode->leftChild) evaluateASTNode(astNode->leftChild);
 			if(astNode->rightChild) evaluateASTNode(astNode->rightChild);	
@@ -131,4 +132,8 @@ void freeASTNode(ASTNode* astNode) {
 				free(astNode);
 	}
 	*/
+}
+
+int generateCode(ASTNode* astNode) {
+	return 0;
 }
