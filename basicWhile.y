@@ -59,6 +59,7 @@ Factor:			VARIABLE		{ $$ = makeIntegerNode(variable, $1); }
 	;
 
 BooleanExpression:	Expression NEQ Expression	{ $$ = makeASTNode(nequal, $1, $3); }
+	|		Expression '>' Expression	{ $$ = makeASTNode(gt, $1, $3);    }
 	|		BOOL				{ $$ = makeIntegerNode(integer, $1); }
 	;
 

@@ -24,6 +24,7 @@ v[0-9] 	{ yylval.intValue=(yytext[1] - '0'); return VARIABLE; }
 "/" |
 "(" |
 ")" |
+">" |
 ","	{ return yytext[0]; }
 
 "while"	{ return WHILE; }

@@ -64,6 +64,8 @@ int evaluateASTNode(ASTNode* astNode) {
 			return evaluateASTNode(astNode->leftChild) / evaluateASTNode(astNode->rightChild);
 		case nequal:	
 			return evaluateASTNode(astNode->leftChild) != evaluateASTNode(astNode->rightChild);
+		case gt:
+			return evaluateASTNode(astNode->leftChild) > evaluateASTNode(astNode->rightChild);	
 		case integer:	
 			return ((IntegerNode*) astNode)->value;
 		case variable:	

@@ -72,6 +72,36 @@ int main(int argc, char** argv) {
 	freeASTNode(nequalNode);
 }
 #endif
+#ifdef EVAL_GT_1
+int main(int argc, char** argv) {
+	printf("Test: EVAL_GT_1\n");
+	ASTNode* oneNode = makeIntegerNode(integer, 1);
+	ASTNode* twoNode = makeIntegerNode(integer, 1);
+	ASTNode* gtNode = makeASTNode(gt, oneNode, twoNode);
+	printf("Expected: 0, Actual: %d\n", evaluateASTNode(gtNode));
+	freeASTNode(gtNode);
+}
+#endif
+#ifdef EVAL_GT_2
+int main(int argc, char** argv) {
+	printf("Test: EVAL_GT_2\n");
+	ASTNode* oneNode = makeIntegerNode(integer, 0);
+	ASTNode* twoNode = makeIntegerNode(integer, 1);
+	ASTNode* gtNode = makeASTNode(gt, oneNode, twoNode);
+	printf("Expected: 0, Actual: %d\n", evaluateASTNode(gtNode));
+	freeASTNode(gtNode);
+}
+#endif
+#ifdef EVAL_GT_3
+int main(int argc, char** argv) {
+	printf("Test: EVAL_GT_3\n");
+	ASTNode* oneNode = makeIntegerNode(integer, 4);
+	ASTNode* twoNode = makeIntegerNode(integer, 1);
+	ASTNode* gtNode = makeASTNode(gt, oneNode, twoNode);
+	printf("Expected: 1, Actual: %d\n", evaluateASTNode(gtNode));
+	freeASTNode(gtNode);
+}
+#endif
 #ifdef ASSIGN
 int main(int argc, char** argv) {
 	printf("Test: ASSIGN\n");
