@@ -41,6 +41,7 @@ int evaluateASTNode(ASTNode* astNode) {
 		case minus:	return evaluateASTNode(astNode->leftChild) - evaluateASTNode(astNode->rightChild);
 		case multiply:	return evaluateASTNode(astNode->leftChild) * evaluateASTNode(astNode->rightChild);
 		case divide:	return evaluateASTNode(astNode->leftChild) / evaluateASTNode(astNode->rightChild);
+		case nequal:	return evaluateASTNode(astNode->leftChild) != evaluateASTNode(astNode->rightChild);
 		case integer:	return ((IntegerNode*) astNode)->value;
 		default:	printf("Reached default case in evaluateASTNode\n");	
 	}

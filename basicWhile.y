@@ -14,8 +14,8 @@ int symbolArray[10];
 
 %token VARIABLE INTEGER BOOL WHILE NEQ DO OD ASS_PLUS ASS_SUB WRITE
 
-%type <astNode> Expression Factor
-%type <intValue> INTEGER VARIABLE
+%type <astNode> Expression Factor BooleanExpression ArithmeticExpression
+%type <intValue> INTEGER VARIABLE BOOL
 
 %left '+' '-'
 %left '*' '/'
@@ -40,20 +40,27 @@ WriteStatement:		WRITE VARIABLE		{ printf("v%d: %d\n", $2, symbolArray[$2]); }
 AssignmentStatement:	VARIABLE '=' VARIABLE	{ symbolArray[$1] = symbolArray[$3]; }
 	| 		VARIABLE '=' INTEGER	{ symbolArray[$1] = $3; }
 	| 		VARIABLE '=' Expression { symbolArray[$1] = evaluateASTNode($3); }
-	| 		VARIABLE ASS_PLUS Expression { symbolArray[$1] = symbolArray[$1] + evaluateASTNode($3); }	
-	| 		VARIABLE ASS_SUB Expression { symbolArray[$1] = symbolArray[$1] - evaluateASTNode($3); }
-	|		Expression
+	| 		VARIABLE ASS_PLUS ArithmeticExpression { symbolArray[$1] = symbolArray[$1] + evaluateASTNode($3); }	
+	| 		VARIABLE ASS_SUB ArithmeticExpression { symbolArray[$1] = symbolArray[$1] - evaluateASTNode($3); }
 	;
 
-Expression:		Expression '*' Expression	{ $$ = makeASTNode(multiply, $1, $3); }
-	|		Expression '/' Expression 	{ $$ = makeASTNode(divide, $1, $3); }
-	|		Expression '+' Expression 	{ $$ = makeASTNode(plus, $1, $3); }
-	|		Expression '-' Expression 	{ $$ = makeASTNode(minus, $1, $3); }
+Expression:		ArithmeticExpression
+	|		BooleanExpression	
+	;
+
+ArithmeticExpression:	ArithmeticExpression '*' ArithmeticExpression	{ $$ = makeASTNode(multiply, $1, $3); }
+	|		ArithmeticExpression '/' ArithmeticExpression 	{ $$ = makeASTNode(divide, $1, $3); }
+	|		ArithmeticExpression '+' ArithmeticExpression 	{ $$ = makeASTNode(plus, $1, $3); }
+	|		ArithmeticExpression '-' ArithmeticExpression 	{ $$ = makeASTNode(minus, $1, $3); }
 	| 		Factor				
 	;	
 
 Factor:			VARIABLE		{ $$ = makeIntegerNode(symbolArray[$1]); }
 	|		INTEGER			{ $$ = makeIntegerNode($1);}
+	;
+
+BooleanExpression:	Expression NEQ Expression	{ $$ = makeASTNode(nequal, $1, $3); }
+	|		BOOL				{ $$ = makeIntegerNode($1); }
 	;
 
 %%
@@ -63,6 +70,4 @@ int main(int argc, char** argv) {
 	yyparse();
 }
 
-int yyerror(char* s) {
-	fprintf(stderr, "Error: %s\n", s);
-}
+int yyerror(char* s) { fprintf(stderr, "Error: %s\n", s); }

@@ -7,7 +7,7 @@ extern int yylineno;
 int yyerror(char *s);
 #endif
 
-enum NodeType { ast, integer, plus, minus, multiply, divide };
+enum NodeType { ast, integer, plus, minus, multiply, divide, nequal };
 
 typedef enum NodeType NodeType;
 

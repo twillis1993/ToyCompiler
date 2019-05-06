@@ -3,6 +3,7 @@ DEF=EVAL_INT
 BISON_DEF=PROD
 DEF_FLAGS=-D$(DEF) -D$(BISON_DEF)
 
+# Running ast tests: make main DEF=<test_case> BISON_DEF=TEST
 ast.o:	ast.c
 	$(CC) -c -o $@ $^ -I. $(DEF_FLAGS)
 

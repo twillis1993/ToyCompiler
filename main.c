@@ -50,3 +50,23 @@ int main(int argc, char** argv) {
 	freeASTNode(divideNode);
 }
 #endif
+#ifdef EVAL_NEQUAL_1
+int main(int argc, char** argv) {
+	printf("Test: EVAL_NEQUAL\n");
+	ASTNode* oneNode = makeIntegerNode(1);
+	ASTNode* twoNode = makeIntegerNode(1);
+	ASTNode* nequalNode = makeASTNode(nequal, oneNode, twoNode);
+	printf("Expected: 0, Actual: %d\n", evaluateASTNode(nequalNode));
+	freeASTNode(nequalNode);
+}
+#endif
+#ifdef EVAL_NEQUAL_2
+int main(int argc, char** argv) {
+	printf("Test: EVAL_NEQUAL\n");
+	ASTNode* oneNode = makeIntegerNode(0);
+	ASTNode* twoNode = makeIntegerNode(1);
+	ASTNode* nequalNode = makeASTNode(nequal, oneNode, twoNode);
+	printf("Expected: 1, Actual: %d\n", evaluateASTNode(nequalNode));
+	freeASTNode(nequalNode);
+}
+#endif
