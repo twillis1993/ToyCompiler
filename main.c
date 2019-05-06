@@ -75,7 +75,6 @@ int main(int argc, char** argv) {
 #ifdef ASSIGN
 int main(int argc, char** argv) {
 	printf("Test: ASSIGN\n");
-
 	ASTNode* variableNode = makeIntegerNode(variable, 1);
 	ASTNode* fiveNode = makeIntegerNode(integer, 5);
 	ASTNode* assignNode = makeASTNode(assign, variableNode, fiveNode);
@@ -86,13 +85,38 @@ int main(int argc, char** argv) {
 	freeASTNode(assignNode);
 }
 #endif
+#ifdef WRITE
+int main(int argc, char** argv) {
+	printf("Test: WRITE\n");
+	printf("Expected output: 5\nActual output: ");
+	ASTNode* oneNode = makeIntegerNode(integer, 10);
+	ASTNode* twoNode = makeIntegerNode(integer, 2);
+	ASTNode* divideNode = makeASTNode(divide, oneNode, twoNode);
+	ASTNode* writeNode = makeASTNode(write, divideNode, NULL);
+	evaluateASTNode(writeNode);	
+	freeASTNode(writeNode);
+}
+#endif
 #ifdef WHILE
 int main(int argc, char** argv) {
 	printf("Test: WHILE\n");
-
 	ASTNode* conditionNode = NULL;
 	ASTNode* doListNode = NULL;
 	ASTNode* whileNode = makeASTNode(doWhile, conditionNode, doListNode);
 	freeASTNode(whileNode);
+}
+#endif
+#ifdef LIST
+int main(int argc, char** argv) {
+	printf("Test: LIST\n");
+	// left child
+	ASTNode* variableNode = makeIntegerNode(variable, 1);
+	ASTNode* fiveNode = makeIntegerNode(integer, 5);
+	ASTNode* assignNode = makeASTNode(assign, variableNode, fiveNode);
+	// right child		
+	ASTNode* writeNode = makeASTNode(write, variableNode, NULL);
+	ASTNode* listNode = makeASTNode(list, assignNode, writeNode);	
+	evaluateASTNode(listNode);	
+	freeASTNode(listNode);
 }
 #endif

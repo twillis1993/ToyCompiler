@@ -26,7 +26,7 @@ BasicWhileProgram:	StatementList ';'
 	;
 
 StatementList:		
-	|		Statement ';' StatementList
+	|		Statement ';' StatementList 
 	;
 
 Statement:		AssignmentStatement
@@ -40,8 +40,7 @@ AssignmentStatement:	VARIABLE '=' Expression	{ $$ = makeASTNode(assign, makeInte
 
 WhileStatement:		WHILE '(' BooleanExpression ')' DO BasicWhileProgram OD
 
-WriteStatement:		WRITE VARIABLE		{ printf("v%d: %d\n", $2, symbolArray[$2]); }
-	|		WRITE INTEGER		{ printf("%d\n", $2);}
+WriteStatement:		WRITE Expression		{ $$ = makeASTNode(write, $2, NULL); }
 	;
 
 Expression:		ArithmeticExpression

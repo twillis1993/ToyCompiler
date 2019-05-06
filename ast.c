@@ -68,6 +68,9 @@ int evaluateASTNode(ASTNode* astNode) {
 			return ((IntegerNode*) astNode)->value;
 		case variable:	
 			return symbolArray[((IntegerNode*) astNode)->value];
+		case write:
+			printf("%d\n", evaluateASTNode(astNode->leftChild));
+			return 0;
 		case assign:
 			symbolArray[((IntegerNode*) (astNode->leftChild))->value] = evaluateASTNode(astNode->rightChild);
 			return 0;	
@@ -77,8 +80,11 @@ int evaluateASTNode(ASTNode* astNode) {
 					evaluateASTNode(((WhileNode*) astNode)->doList);		
 				}	
 			}
-			// TODO reconsider this
 			return 0;
+		case list: 
+			if(astNode->leftChild) evaluateASTNode(astNode->leftChild);
+			if(astNode->rightChild) evaluateASTNode(astNode->rightChild);
+			return 0;	
 		default:	printf("Reached default case in evaluateASTNode\n");	
 	}
 }

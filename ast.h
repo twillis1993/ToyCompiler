@@ -9,7 +9,7 @@ int yyerror(char *s);
 
 extern int symbolArray[10];
 
-enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write };
+enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write, list };
 
 typedef enum NodeType NodeType;
 
