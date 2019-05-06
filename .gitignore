@@ -6,3 +6,5 @@ basicWhile.output
 oldGrammar.txt
 oldLexer.txt
 .*.sw*
+*.o
+main

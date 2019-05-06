@@ -37,6 +37,10 @@ ASTNode* makeIntegerNode(int value) {
 
 int evaluateASTNode(ASTNode* astNode) {
 	switch(astNode->nodeType) {
+		case plus:	return evaluateASTNode(astNode->leftChild) + evaluateASTNode(astNode->rightChild);
+		case minus:	return evaluateASTNode(astNode->leftChild) - evaluateASTNode(astNode->rightChild);
+		case multiply:	return evaluateASTNode(astNode->leftChild) * evaluateASTNode(astNode->rightChild);
+		case divide:	return evaluateASTNode(astNode->leftChild) / evaluateASTNode(astNode->rightChild);
 		case integer:	return ((IntegerNode*) astNode)->value;
 		default:	printf("Reached default case in evaluateASTNode\n");	
 	}
@@ -45,9 +49,11 @@ int evaluateASTNode(ASTNode* astNode) {
 void freeASTNode(ASTNode* astNode) {
 	// TODO nice trick in the book relating to cases, we don't break so we always free this node
 	switch(astNode->nodeType) {
-		case ast:	if(astNode->leftChild) freeASTNode(astNode->leftChild); if(astNode->rightChild) freeASTNode(astNode->rightChild); 	
-		case integer:	free(astNode); break;
-		default:	printf("Reached default case in freeASTNode\n");
+		case integer:	free(astNode); 
+				break;
+		default:	if(astNode->leftChild) freeASTNode(astNode->leftChild); 
+				if(astNode->rightChild) freeASTNode(astNode->rightChild); 
+				free(astNode);
 	}
 }
 
