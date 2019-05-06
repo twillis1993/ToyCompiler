@@ -30,6 +30,11 @@ StatementList:
 	;
 
 Statement:		AssignmentStatement
+	|		WriteStatement
+	;
+
+WriteStatement:		WRITE VARIABLE		{ printf("v%d: %d\n", $2, symbolArray[$2]); }
+	|		WRITE INTEGER		{ printf("%d\n", $2);}
 	;
 
 AssignmentStatement:	VARIABLE '=' VARIABLE	{ symbolArray[$1] = symbolArray[$3]; }
