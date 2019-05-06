@@ -1,0 +1,8 @@
+basicWhile
+basicWhile.tab.c
+basicWhile.tab.h
+lex.yy.c
+basicWhile.output
+oldGrammar.txt
+oldLexer.txt
+.*.sw*

@@ -1,8 +1,14 @@
 # TODO
 
+Check coursework brief, needs to be able to evaluate expressions
+
 Need if statement to check equality
 
+Reintroduce augmented assignment
+
 Reintroduce read/write statements
+
+Use the %left operator to introduce precedence
 
 # Pseudocode
 
