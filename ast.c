@@ -135,99 +135,102 @@ void freeASTNode(ASTNode* astNode) {
 }
 
 void generateProgram(ASTNode* headNode) {
+	FILE* outputFile = fopen("cCode.c", "w");
+
 	char* preambleString = "#include <stdio.h>\nint main(int argc, char** argv) {\n";
 	char* symbolArrayString = "int symbolArray[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};\n";
 	char* endString = "return 0;\n}\n";
-	printf("%s", preambleString);	
-	printf("%s", symbolArrayString);		
+	fprintf(outputFile, "%s", preambleString);	
+	fprintf(outputFile, "%s", symbolArrayString);		
 	if(headNode->leftChild) {	
-		generateCode(headNode->leftChild);		
+		generateCode(headNode->leftChild, outputFile);
 	}
-	printf("%s", endString);	
+	fprintf(outputFile, "%s", endString);	
+	fclose(outputFile);
 }
 
-void generateCode(ASTNode* astNode) {
+void generateCode(ASTNode* astNode, FILE* outputFile) {
 
 	switch(astNode->nodeType) {
 		case plus:
-			generateCode(astNode->leftChild);
-			printf(" + ");
-			generateCode(astNode->rightChild);
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, " + ");
+			generateCode(astNode->rightChild, outputFile);
 			break;
 		case minus:	
-			generateCode(astNode->leftChild);
-			printf(" - ");
-			generateCode(astNode->rightChild);
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, " - ");
+			generateCode(astNode->rightChild, outputFile);
 			break;
 		case multiply:	
-			generateCode(astNode->leftChild);
-			printf(" * ");
-			generateCode(astNode->rightChild);
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, " * ");
+			generateCode(astNode->rightChild, outputFile);
 			break;
 		case divide:	
-			generateCode(astNode->leftChild);
-			printf(" / ");
-			generateCode(astNode->rightChild);
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, " / ");
+			generateCode(astNode->rightChild, outputFile);
 			break;
 		case nequal:	
-			generateCode(astNode->leftChild);
-			printf(" != ");
-			generateCode(astNode->rightChild);
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, " != ");
+			generateCode(astNode->rightChild, outputFile);
 			break;
 		case gt:
-			generateCode(astNode->leftChild);
-			printf(" > ");
-			generateCode(astNode->rightChild);
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, " > ");
+			generateCode(astNode->rightChild, outputFile);
 			break;
 		case integer:	
-			printf("%d", ((IntegerNode*) astNode)->value);
+			fprintf(outputFile, "%d", ((IntegerNode*) astNode)->value);
 			break;
 		case variable:	
-			printf("symbolArray[%d]", ((IntegerNode*) astNode)->value);
+			fprintf(outputFile, "symbolArray[%d]", ((IntegerNode*) astNode)->value);
 			break;
 		case write:
-			printf("printf(\"%%d\\n\", ");
-			generateCode(astNode->leftChild);
-			printf(");");
+			fprintf(outputFile, "fprintf(outputFile, \"%%d\\n\", ");
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, ");");
 			break;
 		case assign:	
-			generateCode(astNode->leftChild);
-			printf(" = ");
-			generateCode(astNode->rightChild);
-			printf(";");
+			generateCode(astNode->leftChild, outputFile);
+			fprintf(outputFile, " = ");
+			generateCode(astNode->rightChild, outputFile);
+			fprintf(outputFile, ";");
 			break;
 		case doWhile:
-			printf("while (");
-			generateCode(((WhileNode*) astNode)->condition);
-			printf(") {\n");
-			generateCode(((WhileNode*) astNode)->doList);
-			printf("}\n");
+			fprintf(outputFile, "while (");
+			generateCode(((WhileNode*) astNode)->condition, outputFile);
+			fprintf(outputFile, ") {\n");
+			generateCode(((WhileNode*) astNode)->doList, outputFile);
+			fprintf(outputFile, "}\n");
 			break;
 		case program:
 		case list: 
 			if(astNode->leftChild) {
-				generateCode(astNode->leftChild);
-				printf("\n");
+				generateCode(astNode->leftChild, outputFile);
+				fprintf(outputFile, "\n");
 			}	
 			if(astNode->rightChild) {
-				generateCode(astNode->rightChild);
+				generateCode(astNode->rightChild, outputFile);
 			}
 			break;
 		case ifElse:
-			printf("if(");	
-			generateCode(((IfElseNode*) astNode)->condition);
-			printf(") {\n");
+			fprintf(outputFile, "if(");	
+			generateCode(((IfElseNode*) astNode)->condition, outputFile);
+			fprintf(outputFile, ") {\n");
 			if(((IfElseNode*) astNode)->ifList) { 
-				generateCode(((IfElseNode*) astNode)->ifList);
+				generateCode(((IfElseNode*) astNode)->ifList, outputFile);
 			}
 			if(((IfElseNode*) astNode)->elseList) {
-				printf("} else {\n");
-				generateCode(((IfElseNode*) astNode)->ifList);	
+				fprintf(outputFile, "} else {\n");
+				generateCode(((IfElseNode*) astNode)->ifList, outputFile);	
 			} 
-			printf("}");
+			fprintf(outputFile, "}");
 			break;
 		default:	
-			printf("Reached default case in generateCode\n");	
+			printf("Reached default case in generateCode\n");
 	
 		}
 }

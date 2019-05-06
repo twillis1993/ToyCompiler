@@ -8,3 +8,6 @@ oldLexer.txt
 .*.sw*
 *.o
 main
+testCode
+testCode.c
+cCode.c

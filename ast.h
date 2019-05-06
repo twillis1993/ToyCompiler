@@ -59,7 +59,7 @@ void freeASTNode(ASTNode* astNode);
 
 void generateProgram(ASTNode* headNode);
 
-void generateCode(ASTNode* astNode);
+void generateCode(ASTNode* astNode, FILE* outputFile);
 
 
 
