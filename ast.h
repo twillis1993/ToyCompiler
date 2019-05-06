@@ -9,7 +9,7 @@ int yyerror(char *s);
 
 extern int symbolArray[10];
 
-enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write, list, gt};
+enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write, list, gt, ifElse };
 
 typedef enum NodeType NodeType;
 
@@ -36,11 +36,22 @@ struct WhileNode {
 
 typedef struct WhileNode WhileNode;
 
+struct IfElseNode {
+	NodeType nodeType;
+	struct ASTNode* condition;
+	struct ASTNode* ifList;
+	struct ASTNode* elseList;
+};
+
+typedef struct IfElseNode IfElseNode;
+
 ASTNode* makeASTNode(NodeType nodeType, ASTNode* leftChild, ASTNode* rightChild);
 
 ASTNode* makeIntegerNode(NodeType nodeType, int value);
 
 ASTNode* makeWhileNode(ASTNode* condition, ASTNode* doList);
+
+ASTNode* makeIfElseNode(ASTNode* condition, ASTNode* ifList, ASTNode* elseList);
 
 int evaluateASTNode(ASTNode* astNode);
 

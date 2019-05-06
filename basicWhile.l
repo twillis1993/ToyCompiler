@@ -32,6 +32,11 @@ v[0-9] 	{ yylval.intValue=(yytext[1] - '0'); return VARIABLE; }
 "od"	{ return OD; }
 "!="	{ return NEQ; }
 "write" { return WRITE; }
+"if"	{ return IF; }
+"fi"	{ return FI; }
+"then"	{ return THEN; }
+"else" 	{ return ELSE;}
+
 
 [ \t\n]	;
 %%

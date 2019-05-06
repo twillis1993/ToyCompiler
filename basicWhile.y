@@ -12,13 +12,14 @@ int symbolArray[10];
 	int intValue;
 }
 
-%token VARIABLE INTEGER BOOL WHILE NEQ DO OD WRITE
+%token VARIABLE INTEGER BOOL WHILE NEQ DO OD WRITE IF FI THEN ELSE 
 
-%type <astNode> Expression Factor BooleanExpression ArithmeticExpression WhileStatement AssignmentStatement WriteStatement Statement StatementList BasicWhileProgram
+%type <astNode> Expression Factor BooleanExpression ArithmeticExpression WhileStatement AssignmentStatement WriteStatement Statement StatementList BasicWhileProgram IfStatement
 %type <intValue> INTEGER VARIABLE BOOL
 
 %left '+' '-'
 %left '*' '/'
+%left NEQ '>'
 
 %%
 
@@ -32,6 +33,7 @@ StatementList:						{ $$ = NULL; }
 Statement:		AssignmentStatement
 	|		WhileStatement
 	|		WriteStatement	
+	| 		IfStatement
 	| 		Expression			{ printf("%d\n", evaluateASTNode($1)); }
 	;
 
@@ -39,6 +41,10 @@ AssignmentStatement:	VARIABLE '=' Expression	{ $$ = makeASTNode(assign, makeInte
 	;
 
 WhileStatement:		WHILE '(' BooleanExpression ')' DO StatementList OD { $$ = makeWhileNode($3, $6); }
+
+IfStatement:		IF '(' BooleanExpression ')' THEN StatementList FI  {$$ = makeIfElseNode($3, $6, NULL); }
+	| 		IF '(' BooleanExpression ')' THEN StatementList FI ELSE StatementList { $$ = makeIfElseNode($3, $6, $9); }
+	;
 
 WriteStatement:		WRITE Expression		{ $$ = makeASTNode(write, $2, NULL); }
 	;
