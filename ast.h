@@ -7,7 +7,10 @@ extern int yylineno;
 int yyerror(char *s);
 #endif
 
-enum NodeType { ast, integer, plus, minus, multiply, divide, nequal };
+// TODO may cause a problem
+extern int symbolArray[10];
+
+enum NodeType { ast, integer, variable, plus, minus, multiply, divide, nequal, doWhile, assign, write };
 
 typedef enum NodeType NodeType;
 
@@ -17,18 +20,28 @@ struct ASTNode {
 	struct ASTNode* rightChild;
 };
 
+typedef struct ASTNode ASTNode;
+
 struct IntegerNode {
 	NodeType nodeType;
 	int value;
 };
 
-typedef struct ASTNode ASTNode;
-
 typedef struct IntegerNode IntegerNode;
+
+struct WhileNode {
+	NodeType nodeType;
+	struct ASTNode* condition;
+	struct ASTNode* doList;
+};
+
+typedef struct WhileNode WhileNode;
 
 ASTNode* makeASTNode(NodeType nodeType, ASTNode* leftChild, ASTNode* rightChild);
 
-ASTNode* makeIntegerNode(int value);
+ASTNode* makeIntegerNode(NodeType nodeType, int value);
+
+ASTNode* makeWhileNode(ASTNode* condition, ASTNode* doList);
 
 int evaluateASTNode(ASTNode* astNode);
 

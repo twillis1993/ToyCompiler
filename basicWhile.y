@@ -12,9 +12,9 @@ int symbolArray[10];
 	int intValue;
 }
 
-%token VARIABLE INTEGER BOOL WHILE NEQ DO OD ASS_PLUS ASS_SUB WRITE
+%token VARIABLE INTEGER BOOL WHILE NEQ DO OD WRITE
 
-%type <astNode> Expression Factor BooleanExpression ArithmeticExpression
+%type <astNode> Expression Factor BooleanExpression ArithmeticExpression WhileStatement AssignmentStatement WriteStatement Statement StatementList BasicWhileProgram
 %type <intValue> INTEGER VARIABLE BOOL
 
 %left '+' '-'
@@ -30,18 +30,18 @@ StatementList:
 	;
 
 Statement:		AssignmentStatement
-	|		WriteStatement
+	|		WhileStatement
+	|		WriteStatement	
 	;
+
+
+AssignmentStatement:	VARIABLE '=' Expression	{ $$ = makeASTNode(assign, makeIntegerNode(variable, $1), $3); }
+	;
+
+WhileStatement:		WHILE '(' BooleanExpression ')' DO BasicWhileProgram OD
 
 WriteStatement:		WRITE VARIABLE		{ printf("v%d: %d\n", $2, symbolArray[$2]); }
 	|		WRITE INTEGER		{ printf("%d\n", $2);}
-	;
-
-AssignmentStatement:	VARIABLE '=' VARIABLE	{ symbolArray[$1] = symbolArray[$3]; }
-	| 		VARIABLE '=' INTEGER	{ symbolArray[$1] = $3; }
-	| 		VARIABLE '=' Expression { symbolArray[$1] = evaluateASTNode($3); }
-	| 		VARIABLE ASS_PLUS ArithmeticExpression { symbolArray[$1] = symbolArray[$1] + evaluateASTNode($3); }	
-	| 		VARIABLE ASS_SUB ArithmeticExpression { symbolArray[$1] = symbolArray[$1] - evaluateASTNode($3); }
 	;
 
 Expression:		ArithmeticExpression
@@ -55,12 +55,12 @@ ArithmeticExpression:	ArithmeticExpression '*' ArithmeticExpression	{ $$ = makeA
 	| 		Factor				
 	;	
 
-Factor:			VARIABLE		{ $$ = makeIntegerNode(symbolArray[$1]); }
-	|		INTEGER			{ $$ = makeIntegerNode($1);}
+Factor:			VARIABLE		{ $$ = makeIntegerNode(variable, $1); }
+	|		INTEGER			{ $$ = makeIntegerNode(integer, $1);}
 	;
 
 BooleanExpression:	Expression NEQ Expression	{ $$ = makeASTNode(nequal, $1, $3); }
-	|		BOOL				{ $$ = makeIntegerNode($1); }
+	|		BOOL				{ $$ = makeIntegerNode(integer, $1); }
 	;
 
 %%

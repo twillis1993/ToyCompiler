@@ -26,8 +26,6 @@ v[0-9] 	{ yylval.intValue=(yytext[1] - '0'); return VARIABLE; }
 ")" |
 ","	{ return yytext[0]; }
 
-"+="	{ return ASS_PLUS; }
-"-="	{ return ASS_SUB; }
 "while"	{ return WHILE; }
 "do"	{ return DO; }
 "od"	{ return OD; }

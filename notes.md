@@ -22,3 +22,11 @@ return a;
 # AST
 
 I think that the Expression: Factor production may pose a problem as it will give us an IntegerNode Expression
+
+Problem at the moment is that we do not evaluate the BasicWhileProgram/StatementList
+
+Todo:
+
+* StatementList node
+* WriteStatement node
+* AssignmentStatement node
