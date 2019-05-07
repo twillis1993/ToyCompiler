@@ -2,14 +2,6 @@
 
 Check coursework brief, needs to be able to evaluate expressions
 
-Need if statement to check equality
-
-Reintroduce augmented assignment
-
-Reintroduce read/write statements
-
-Use the %left operator to introduce precedence
-
 # Pseudocode
 
 while a != b
@@ -19,14 +11,13 @@ while a != b
 		b := b - a;
 return a;
 
-# AST
+# TODO
 
-I think that the Expression: Factor production may pose a problem as it will give us an IntegerNode Expression
+Readme
 
-Problem at the moment is that we do not evaluate the BasicWhileProgram/StatementList
-
-Todo:
-
-* StatementList node
-* WriteStatement node
-* AssignmentStatement node
+* Variables are numbered 0-9, we store them in an array which we update, initialised to 0 so that we do not need to handle initialisation
+* Kept grammar small, just what was necessary to implement Euclid's algorithm
+* Used the abstract syntax tree from Levine, omitted proper symbol table, though
+* We construct the abstract syntax tree depth-up
+* We evaluate from the head down
+* We also generate code from the head down 
