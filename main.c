@@ -177,14 +177,3 @@ int main(int argc, char** argv) {
 	freeASTNode(programNode);
 }
 #endif
-#ifdef READ
-int main(int argc, char** argv) {
-	printf("Test: READ\n");
-	
-	scanf("%d", symbolArray);
-
-	printf("symbolArray[0]: %d\n", symbolArray[0]);		
-	
-}
-#endif
-

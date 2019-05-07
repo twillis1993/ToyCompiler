@@ -91,8 +91,6 @@ int evaluateASTNode(ASTNode* astNode) {
 		case write:
 			printf("%d\n", evaluateASTNode(astNode->leftChild));
 			return 0;
-		case read:		
-			return 0;	
 		case assign:
 			symbolArray[((IntegerNode*) (astNode->leftChild))->value] = evaluateASTNode(astNode->rightChild);
 			return 0;	
@@ -194,8 +192,6 @@ void generateCode(ASTNode* astNode, FILE* outputFile) {
 			fprintf(outputFile, "printf(\"%%d\\n\", ");
 			generateCode(astNode->leftChild, outputFile);
 			fprintf(outputFile, ");");
-			break;
-		case read:
 			break;
 		case assign:	
 			generateCode(astNode->leftChild, outputFile);
