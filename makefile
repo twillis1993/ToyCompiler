@@ -19,4 +19,4 @@ basicWhile:	basicWhile.l basicWhile.y ast.o
 		$(CC) -o $@ ast.o basicWhile.tab.c lex.yy.c -I. -lfl $(DEF_FLAGS)
 
 clean:		
-		rm -f *.o basicWhile main
+		rm -f *.o basicWhile *.tab.* main *.output lex.yy.c cCode.c;
