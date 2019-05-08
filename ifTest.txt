@@ -1,0 +1,7 @@
+v0=0;
+v1=3;
+
+if(v1>v0) then 
+	write v1;
+fi;
+
