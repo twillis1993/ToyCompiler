@@ -150,7 +150,6 @@ void generateProgram(ASTNode* headNode) {
 }
 
 void generateCode(ASTNode* astNode, FILE* outputFile) {
-
 	switch(astNode->nodeType) {
 		case plus:
 			generateCode(astNode->leftChild, outputFile);
@@ -225,7 +224,7 @@ void generateCode(ASTNode* astNode, FILE* outputFile) {
 			}
 			if(((IfElseNode*) astNode)->elseList) {
 				fprintf(outputFile, "} else {\n");
-				generateCode(((IfElseNode*) astNode)->ifList, outputFile);	
+				generateCode(((IfElseNode*) astNode)->elseList, outputFile);	
 			} 
 			fprintf(outputFile, "}");
 			break;
