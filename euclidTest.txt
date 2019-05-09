@@ -1,5 +1,5 @@
 v1=1023;
-v2=7;
+v2=12;
 while(v1!=v2) do
 	if(v1>v2) then 
 		v1 = v1 - v2;
