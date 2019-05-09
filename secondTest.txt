@@ -1,7 +1,0 @@
-v0=0;
-v1=3;
-
-if(v1>v2) then 
-	v1 = v1 - v2;
-fi else
-
