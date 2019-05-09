@@ -8,10 +8,10 @@ I borrowed heavily from examples in Levine's 'Flex and Bison' textbook.
 
 Run:
  
-	`make basicWhile`
+	make basicWhile
 
 The compiler can be run interactively with `./basicWhile` or a source file can be passed to it, e.g.
 
-	`./basicWhile < euclidTest.txt`
+	./basicWhile < euclidTest.txt
 
 The compiler generates ugly C code in the `cCode.c` file. 
