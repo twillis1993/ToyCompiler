@@ -121,17 +121,24 @@ int evaluateASTNode(ASTNode* astNode) {
 // TODO reenable me and implement for while node etc.
 
 void freeASTNode(ASTNode* astNode) {
-	/*
 	// TODO nice trick in the book relating to cases, we don't break so we always free this node
 	switch(astNode->nodeType) {
+		case variable:
 		case integer:	free(astNode); 
 				break;
-		case doWhile:	freeASTNode
+		case doWhile:	if(((WhileNode*) astNode)->condition) freeASTNode(((WhileNode*) astNode)->condition);
+				if(((WhileNode*) astNode)->doList) freeASTNode(((WhileNode*) astNode)->doList);
+				free(astNode);
+				break;	
+		case ifElse:	if(((IfElseNode*) astNode)->condition) freeASTNode(((IfElseNode*) astNode)->condition);
+				if(((IfElseNode*) astNode)->ifList) freeASTNode(((IfElseNode*) astNode)->ifList);
+				if(((IfElseNode*) astNode)->elseList) freeASTNode(((IfElseNode*) astNode)->elseList);
+				free(astNode);
+				break;		
 		default:	if(astNode->leftChild) freeASTNode(astNode->leftChild); 
 				if(astNode->rightChild) freeASTNode(astNode->rightChild); 
 				free(astNode);
 	}
-	*/
 }
 
 void generateProgram(ASTNode* headNode) {
@@ -150,7 +157,6 @@ void generateProgram(ASTNode* headNode) {
 }
 
 void generateCode(ASTNode* astNode, FILE* outputFile) {
-
 	switch(astNode->nodeType) {
 		case plus:
 			generateCode(astNode->leftChild, outputFile);
@@ -225,7 +231,7 @@ void generateCode(ASTNode* astNode, FILE* outputFile) {
 			}
 			if(((IfElseNode*) astNode)->elseList) {
 				fprintf(outputFile, "} else {\n");
-				generateCode(((IfElseNode*) astNode)->ifList, outputFile);	
+				generateCode(((IfElseNode*) astNode)->elseList, outputFile);	
 			} 
 			fprintf(outputFile, "}");
 			break;

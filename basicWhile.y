@@ -23,7 +23,7 @@ int symbolArray[10];
 
 %%
 
-BasicWhileProgram:	StatementList 		{ $$ = makeASTNode(program, $1, NULL); evaluateASTNode($$); generateProgram($$); }
+BasicWhileProgram:	StatementList 		{ $$ = makeASTNode(program, $1, NULL); evaluateASTNode($$); generateProgram($$); freeASTNode($$); }
 	;
 
 StatementList:						{ $$ = NULL; }
